@@ -1,68 +1,63 @@
+import { getSearchResults } from '@/lib/actions';
 import { MovieCard } from '@/components/MovieCard';
-import Link from 'next/link';
-import { Button } from '@/components/ui/button';
-import { ArrowRight } from 'lucide-react';
-import { getHomepageMovies, getCategories } from '@/lib/actions';
-import { cn } from '@/lib/utils';
+import { Suspense } from 'react';
 
 export const revalidate = 3600; // Revalidate every hour
 
-async function CategoryBrowser() {
-  const categories = await getCategories();
-  return (
-    <div className="mb-12">
-     
-      <div className="flex p-0 justify-center flex-wrap gap-3">
-          {categories.map((category) => (
-              <Link href={category.path} key={category.path} passHref>
-                  <Button
-                      className={cn(
-                          'h-auto p-0 text-white font-bold text-[12px] animate-bump transition-all duration-500',
-                          'bg-gradient-to-r from-red-600 to-black',
-                          'shadow-[0_6px_15px_-2px_rgba(255,0,0,0.5)]',
-                          'hover:saturate-200 hover:-translate-y-1'
-                      )}
-                      >
-                      <div className="px-4 py-2">{category.name}</div>
-                  </Button>
-              </Link>
-          ))}
-      </div>
-    </div>
-  )
+interface SearchPageProps {
+  searchParams: {
+    q?: string;
+  };
 }
 
-export default async function Home() {
-  const movies = await getHomepageMovies(1);
+export default function SearchPage({ searchParams }: SearchPageProps) {
+  const query = searchParams.q || '';
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <CategoryBrowser />
-
-      <h1 className="mb-8 font-headline text-xl font-bold tracking-tight text-foreground sm:text-4xl">
-        Trending & Recent
+      <h1 className="mb-8 font-headline text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+        {query ? `Results for "${query}"` : 'Search'}
       </h1>
-      {movies && movies.length > 0 ? (
-        <>
-          <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7">
-            {movies.map((movie) => (
-              <MovieCard key={movie.path} movie={movie} />
-            ))}
-          </div>
-          <div className="mt-12 flex justify-center gap-4">
-            <Button asChild variant="outline">
-              <Link href={`/page/2`}>
-                Next
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Link>
-            </Button>
-          </div>
-        </>
-      ) : (
-        <div className="flex h-64 items-center justify-center rounded-lg border-2 border-dashed border-muted">
-          <p className="text-center text-muted-foreground">Could not load movies. The source site might be down or has changed its structure. <br/> Check the server logs for more details.</p>
-        </div>
-      )}
+      <Suspense fallback={<SearchResultsSkeleton />}>
+        <SearchResults query={query} />
+      </Suspense>
     </div>
   );
+}
+
+async function SearchResults({ query }: { query: string }) {
+  if (!query) {
+    return <p className="text-muted-foreground">Please enter a search term to find movies and series.</p>;
+  }
+
+  const movies = await getSearchResults(query);
+
+  if (movies.length === 0) {
+    return (
+      <div className="flex h-64 items-center justify-center rounded-lg border-2 border-dashed border-muted">
+        <p className="text-center text-muted-foreground">No results found for "{query}".<br/>Try a different search term.</p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7">
+      {movies.map((movie) => (
+        <MovieCard key={movie.path} movie={movie} />
+      ))}
+    </div>
+  );
+}
+
+function SearchResultsSkeleton() {
+    return (
+        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7">
+        {Array.from({ length: 14 }).map((_, i) => (
+            <div key={i} className="space-y-2">
+                <div className="aspect-[2/3] w-full animate-pulse rounded-lg bg-muted"></div>
+                <div className="h-4 w-3/4 animate-pulse rounded bg-muted"></div>
+            </div>
+        ))}
+        </div>
+    );
 }
