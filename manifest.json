@@ -1,0 +1,52 @@
+{
+  "name": "Kuldeep Movies",
+  "short_name": "Kuldeep Movies",
+  "description": "Your ad-free streaming companion",
+  "start_url": "/",
+  "dir": "auto",
+  "lang": "en-US",
+  "orientation": "any",
+  "display": "standalone",
+  "prefer_related_applications": false,
+  "background_color": "#000",
+  "theme_color": "#000",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "192x192",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "/favicon.ico",
+      "sizes": "512x512",
+      "type": "image/x-icon"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiClxfyKMlcBEfev5ScLMwVebtPDruGI6zut0FtR33UPwDFz6-trsdBH-7riyd1eYZNDxOcyOtELqgyW98_no045jCMZzNR2AB4Xtc04ZdBMr222GSGZDYcfKnecuKhW6FP5pDKlnBpsASDKEPGdESD3KgXfCyrnQ9-9WJIk8I4Zr0xJgt1-LilMpnBnrk/s1612/1000210117.jpg",
+      "type": "image/jpeg",
+      "sizes": "1080x2400"
+    },
+    {
+      "src": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEichGipRsUa7U2mJrPcmecrn3P8mfWlyz8ZNDWInqWqA9DOaGx1QINqLYU4CF6Cjf9F58d-XN27k8lHMrZ5QkEa626xyzvNFelgCLsNbVn9G5w7uz_2tHPsgVZR8ig6jBM2mGcbkD6Z1tiYd5cZyWzfVvXqcWEJihbY8PQ_q0GOoThyPVotvyJ6mJJ07Ws/s1612/1000210118.jpg",
+      "type": "image/jpeg",
+      "sizes": "1080x2400"
+    },
+    {
+      "src": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhXIhz2klcYqZAIwvHOOtW5V9OoRH37OxJeXgGHHP3XfX5HMPtboecos35-kLRZ9DsWSzYPdhtgCmH1NPF_PlT5W6VI7olqcj9fmOccBEnGdkNtmWIdimNWTC_1ZENKqWoWc8ssHJHt3VHl7K018cRwPoejx5Mf3b6cxrVxqksPUzUNJadeoL9_kSiIo1E/s1612/1000210119.jpg",
+      "type": "image/jpeg",
+      "sizes": "1080x2400"
+    },
+    {
+      "src": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhEgUGULBRDmuRRruXhgg1qaKoWkxR8tsYgnfjrlvXx4bmiI8zeRd7h27zlI6YD6q3Edh6pabuLPvTpdhw17s-J5JPI2Ml9DwwuLXb_a90o3_o3-WWz5yYUalHzVfF97BTyCy577wM61vhvpNgTcF_YK0jYQbEp1akNGvkFP7EE5nLXZyL7jYa4n9HblUI/s1612/1000210120.jpg",
+      "type": "image/jpeg",
+      "sizes": "1080x2400"
+    },
+    {
+      "src": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjpvrjYHjwvIhX64EC8pVybLxZpVI4-fUedJkLx2KeCCYCvs3r9GcazwauX_vmYS2mk6qzn_qw2EVMLNNtOLXZKAeTmtMQS_r0VmDPxHlAFbW6FwrdMJXWpfvkc_29gZFGurUCSsYKVlbWPVyIg6S8GNFfRiks3x26ZzjubghQw3b-5ZMHftsj6H-gM-uo/s1612/1000210121.jpg",
+      "type": "image/jpeg",
+      "sizes": "1080x2400"
+    }
+  ]
+}
