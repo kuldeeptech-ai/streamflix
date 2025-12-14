@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: linear-gradient(45deg, #0a0a0a, #1a1a2e);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 20px;
+        }
+        
+        .container {
+            width: 95%;
+            max-width: 1300px;
+            margin: 20px auto;
+        }
+        
+        .frame-title {
+            color: #fff;
+            text-align: center;
+            margin-bottom: 25px;
+            font-size: 28px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 
+                0 0 10px #ff0000,
+                0 0 20px #ff0000,
+                0 0 30px #ff0000,
+                0 0 40px #ff00ff;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 10px;
+            border: 2px solid transparent;
+            background-clip: padding-box;
+            position: relative;
+        }
+        
+        .frame-title::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, 
+                red, orange, yellow, green, 
+                cyan, blue, violet, red);
+            border-radius: 12px;
+            z-index: -1;
+            animation: titleGlow 3s linear infinite;
+        }
+        
+        @keyframes titleGlow {
+            0% { filter: hue-rotate(0deg); }
+            100% { filter: hue-rotate(360deg); }
+        }
+        
+        .video-wrapper {
+            width: 100%;
+            height: 70vh;
+            position: relative;
+            margin-bottom: 30px;
+            padding: 10px; /* This creates space for the border */
+            background: linear-gradient(45deg, 
+                #ff0000, #ff7300, #fffb00, #48ff00,
+                #00ffd5, #002bff, #7a00ff, #ff00c8);
+            background-size: 400% 400%;
+            border-radius: 15px;
+            animation: rgbBorder 4s linear infinite;
+        }
+        
+        @keyframes rgbBorder {
+            0%, 100% {
+                background-position: 0% 50%;
+                box-shadow: 
+                    0 0 20px #ff0000,
+                    0 0 40px #ff0000,
+                    0 0 60px #ff0000;
+            }
+            25% {
+                background-position: 100% 50%;
+                box-shadow: 
+                    0 0 20px #00ff00,
+                    0 0 40px #00ff00,
+                    0 0 60px #00ff00;
+            }
+            50% {
+                background-position: 100% 100%;
+                box-shadow: 
+                    0 0 20px #0000ff,
+                    0 0 40px #0000ff,
+                    0 0 60px #0000ff;
+            }
+            75% {
+                background-position: 0% 100%;
+                box-shadow: 
+                    0 0 20px #ff00ff,
+                    0 0 40px #ff00ff,
+                    0 0 60px #ff00ff;
+            }
+        }
+        
+        .video-container {
+            width: 100%;
+            height: 100%;
+            border-radius: 8px;
+            overflow: hidden;
+            background: #000;
+            position: relative;
+            z-index: 2;
+            box-shadow: 
+                inset 0 0 20px #000,
+                inset 0 0 40px #000;
+        }
+        
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: block;
+        }
+        
+        .copyright {
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+            font-size: 20px;
+            font-weight: bold;
+            background: linear-gradient(45deg, #000, #222);
+            border-radius: 10px;
+            width: 100%;
+            margin-top: 20px;
+            position: relative;
+            overflow: hidden;
+            border: 2px solid transparent;
+            background-clip: padding-box;
+        }
+        
+        .copyright::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, 
+                red, orange, yellow, green, cyan, blue, violet);
+            border-radius: 12px;
+            z-index: -1;
+            animation: copyrightBorder 4s linear infinite;
+        }
+        
+        @keyframes copyrightBorder {
+            0% {
+                filter: hue-rotate(0deg);
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                filter: hue-rotate(360deg);
+                background-position: 0% 50%;
+            }
+        }
+        
+        .copyright span {
+            display: block;
+            font-size: 16px;
+            color: #aaa;
+            margin-top: 5px;
+        }
+        
+        /* Controls styling */
+        .controls {
+            margin: 25px 0;
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .control-btn {
+            padding: 12px 30px;
+            background: linear-gradient(45deg, #ff0000, #0000ff);
+            border: none;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .control-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: 0.5s;
+            z-index: -1;
+        }
+        
+        .control-btn:hover::before {
+            left: 100%;
+        }
+        
+        .control-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 
+                0 0 20px #ff0000,
+                0 0 40px #ff0000,
+                0 5px 15px rgba(0,0,0,0.3);
+        }
+        
+        .control-btn:active {
+            transform: translateY(-1px);
+        }
+        
+        /* Theatre Mode */
+        .theatre-mode {
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            width: 100% !important;
+            height: 100% !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            z-index: 9999 !important;
+            background: #000 !important;
+        }
+        
+        .theatre-mode .video-wrapper {
+            width: 100vw !important;
+            height: 100vh !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            border-radius: 0 !important;
+            animation: none !important;
+            background: #000 !important;
+        }
+        
+        .theatre-mode .video-container {
+            border-radius: 0 !important;
+        }
+        
+        .theatre-mode .controls,
+        .theatre-mode .frame-title,
+        .theatre-mode .copyright {
+            display: none !important;
+        }
+        
+        /* Status indicator */
+        .status-indicator {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 8px 15px;
+            background: rgba(0,0,0,0.8);
+            color: #0f0;
+            border-radius: 5px;
+            font-size: 12px;
+            display: none;
+            border: 1px solid #0f0;
+            z-index: 10000;
+        }
+        
+        /* Loading animation */
+        .loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 18px;
+            display: none;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .video-wrapper {
+                height: 50vh;
+            }
+            
+            .frame-title {
+                font-size: 20px;
+            }
+            
+            .control-btn {
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="frame-title">
+            🎬 ULTIMATE THEATRE PLAYER 🎥
+        </div>
+        
+        <div class="video-wrapper" id="videoWrapper">
+            <div class="video-container">
+                <iframe src="https://0q825sw.live.codepad.app/star.html" 
+                        allowfullscreen
+                        title="Star Video Player"
+                        allow="autoplay; encrypted-media">
+                </iframe>
+                <div class="loading" id="loading">🌀 Loading...</div>
+            </div>
+        </div>
+        
+        <div class="controls">
+            <button class="control-btn" onclick="toggleTheatreMode()">
+                🎭 THEATRE MODE (Press T)
+            </button>
+            <button class="control-btn" onclick="refreshVideo()">
+                🔄 REFRESH VIDEO
+            </button>
+            <button class="control-btn" onclick="showStatus('RGB Mode Active')">
+                🌈 RGB STATUS
+            </button>
+        </div>
+        
+        <div class="copyright" id="copyright">
+            ©️ COPYRIGHT KULDEEP RAI
+            <span>All Rights Reserved | 2024</span>
+        </div>
+    </div>
+    
+    <div class="status-indicator" id="statusIndicator"></div>
+
+    <script>
+        let isTheatreMode = false;
+        let statusTimeout;
+        
+        function toggleTheatreMode() {
+            const body = document.body;
+            const videoWrapper = document.getElementById('videoWrapper');
+            const copyright = document.getElementById('copyright');
+            
+            if (!isTheatreMode) {
+                // Enter theatre mode
+                videoWrapper.classList.add('theatre-mode');
+                copyright.style.display = 'none';
+                document.querySelector('.frame-title').style.display = 'none';
+                document.querySelector('.controls').style.display = 'none';
+                isTheatreMode = true;
+                showStatus('🎭 Theatre Mode Activated');
+            } else {
+                // Exit theatre mode
+                videoWrapper.classList.remove('theatre-mode');
+                copyright.style.display = 'block';
+                document.querySelector('.frame-title').style.display = 'block';
+                document.querySelector('.controls').style.display = 'flex';
+                isTheatreMode = false;
+                showStatus('📺 Normal Mode');
+            }
+        }
+        
+        function refreshVideo() {
+            const iframe = document.querySelector('iframe');
+            const loading = document.getElementById('loading');
+            
+            loading.style.display = 'block';
+            showStatus('🔄 Refreshing Video...');
+            
+            // Store current src
+            const currentSrc = iframe.src;
+            
+            // Reset src to refresh
+            iframe.src = '';
+            setTimeout(() => {
+                iframe.src = currentSrc;
+                loading.style.display = 'none';
+                showStatus('✅ Video Refreshed');
+            }, 500);
+        }
+        
+        function showStatus(message) {
+            const indicator = document.getElementById('statusIndicator');
+            indicator.textContent = message;
+            indicator.style.display = 'block';
+            
+            clearTimeout(statusTimeout);
+            statusTimeout = setTimeout(() => {
+                indicator.style.display = 'none';
+            }, 3000);
+        }
+        
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(event) {
+            // T for theatre mode
+            if (event.key === 't' || event.key === 'T') {
+                toggleTheatreMode();
+                event.preventDefault();
+            }
+            
+            // Escape to exit theatre mode
+            if (event.key === 'Escape' && isTheatreMode) {
+                toggleTheatreMode();
+                event.preventDefault();
+            }
+            
+            // R for refresh
+            if (event.key === 'r' || event.key === 'R') {
+                refreshVideo();
+                event.preventDefault();
+            }
+            
+            // F for fullscreen (browser's native)
+            if (event.key === 'f' || event.key === 'F') {
+                const iframe = document.querySelector('iframe');
+                if (iframe.requestFullscreen) {
+                    iframe.requestFullscreen();
+                } else if (iframe.webkitRequestFullscreen) {
+                    iframe.webkitRequestFullscreen();
+                }
+                showStatus('🖥️ Fullscreen Mode');
+            }
+        });
+        
+        // Show welcome message
+        window.onload = function() {
+            showStatus('🚀 RGB Theatre Player Loaded | Press T for Theatre Mode');
+            
+            // Add mouse move effect for extra RGB
+            document.addEventListener('mousemove', function(e) {
+                const wrapper = document.querySelector('.video-wrapper');
+                const x = e.clientX / window.innerWidth;
+                const y = e.clientY / window.innerHeight;
+                
+                wrapper.style.backgroundPosition = 
+                    `${x * 100}% ${y * 100}%`;
+            });
+        };
+        
+        // Auto-check if iframe is loaded
+        const iframe = document.querySelector('iframe');
+        iframe.onload = function() {
+            document.getElementById('loading').style.display = 'none';
+            showStatus('✅ Video Loaded Successfully');
+        };
+        
+        iframe.onerror = function() {
+            document.getElementById('loading').style.display = 'none';
+            showStatus('❌ Error Loading Video');
+        };
+    </script>
+</body>
+</html>
